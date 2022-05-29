@@ -64,6 +64,8 @@ describe("TrustedDomainRegistry contract", function () {
       expect((await this.trustedDomainsRegistry.size()).toString()).to.equal('0');
       await expect(this.trustedDomainsRegistry.add("-notgud4adomainname.gg")).to.be.revertedWith("invalid domain name - unallowed character");
       expect((await this.trustedDomainsRegistry.size()).toString()).to.equal('0');
+      await expect(this.trustedDomainsRegistry.add("this-domain-name-is-so-long-that-it-is-not-a-valid-one-max-is-68.com")).to.be.revertedWith("invalid domain name - unallowed character");
+      expect((await this.trustedDomainsRegistry.size()).toString()).to.equal('0');
     });
 
     it("Should should return true when containing trustedDomain (case insensitive)", async function() {
