@@ -55,7 +55,7 @@ describe("TrustedAddressesRegistry contract", function () {
     });
 
     it("Should not allow to remove unexisting address", async function() {
-      await expect(this.trustedAddressesRegistry.remove(trustedAddress1.address)).to.be.revertedWith("trustedAddressAddress must be present in map");
+      await expect(this.trustedAddressesRegistry.remove(trustedAddress1.address)).to.be.revertedWith("trustedAddress must be present in map");
     });
 
     it("Should match mapping indexes with list indexes", async function() {

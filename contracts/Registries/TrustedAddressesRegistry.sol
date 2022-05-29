@@ -13,18 +13,18 @@ contract TrustedAddressesRegistry is Ownable {
     mapping(address => TrustedAddress) public trustedAddressesMap; // address => index in the list
     address[] public trustedAddressesList;
 
-    function add(address _trustedAddressAddress) public onlyOwner {
-        TrustedAddress storage entry = trustedAddressesMap[_trustedAddressAddress];
+    function add(address _trustedAddress) public onlyOwner {
+        TrustedAddress storage entry = trustedAddressesMap[_trustedAddress];
         require(!_contains(entry), "trustedAddress already in map");
 
-        trustedAddressesList.push(_trustedAddressAddress);
+        trustedAddressesList.push(_trustedAddress);
         entry.index = trustedAddressesList.length - 1;
         entry.exists = true;
     }
 
-    function remove(address _trustedAddressAddress) public onlyOwner {
-        TrustedAddress storage entry = trustedAddressesMap[_trustedAddressAddress];
-        require(_contains(entry), "trustedAddressAddress must be present in map");
+    function remove(address _trustedAddress) public onlyOwner {
+        TrustedAddress storage entry = trustedAddressesMap[_trustedAddress];
+        require(_contains(entry), "trustedAddress must be present in map");
         require(_isInRange(entry.index), "index must be in range");
         uint256 deleteEntryIndex = entry.index;
 
@@ -34,18 +34,18 @@ contract TrustedAddressesRegistry is Ownable {
         trustedAddressesMap[lastEntryTrustedAddressAddress].index = deleteEntryIndex; // trustedAddressesMap
         trustedAddressesList[deleteEntryIndex] = trustedAddressesList[lastEntryIndex]; // trustedAddressesList
         trustedAddressesList.pop();
-        delete trustedAddressesMap[_trustedAddressAddress];
+        delete trustedAddressesMap[_trustedAddress];
     }
 
-    function getByIndex(uint _index) public view returns (address _trustedAddressAddress) {
+    function getByIndex(uint _index) public view returns (address _trustedAddress) {
         require(_isInRange(_index), "index must be in range");
 
         return trustedAddressesList[_index];
     }
 
-    function getTrustedAddressId(address _trustedAddressAddress) public view returns (uint index, bool exists) {
-        TrustedAddress storage entry = trustedAddressesMap[_trustedAddressAddress];
-        require(_contains(entry), "trustedAddressAddress must be present in map");
+    function getTrustedAddressId(address _trustedAddress) public view returns (uint index, bool exists) {
+        TrustedAddress storage entry = trustedAddressesMap[_trustedAddress];
+        require(_contains(entry), "trustedAddress must be present in map");
 
         return (entry.index, entry.exists);
     }
@@ -54,8 +54,8 @@ contract TrustedAddressesRegistry is Ownable {
         return trustedAddressesList.length;
     }
 
-    function contains(address _trustedAddressAddress) public view returns (bool) {
-        TrustedAddress storage entry = trustedAddressesMap[_trustedAddressAddress];
+    function contains(address _trustedAddress) public view returns (bool) {
+        TrustedAddress storage entry = trustedAddressesMap[_trustedAddress];
         return _contains(entry);
     }
 
