@@ -14,7 +14,7 @@ contract ProtocolsRegistry is Ownable {
     bytes32[] public protocolsList;
 
     function add(string memory _protocolName) public onlyOwner {
-        bytes32 key = _protocolNameToIndex(_protocolName);
+        bytes32 key = protocolNameToBytes(_protocolName);
         Protocol storage entry = protocolsMap[key];
         require(!_contains(entry), "protocolName (case insensitive) already in map");
 
@@ -24,7 +24,7 @@ contract ProtocolsRegistry is Ownable {
     }
 
     function remove(string memory _protocolName) public onlyOwner {
-        bytes32 key = _protocolNameToIndex(_protocolName);
+        bytes32 key = protocolNameToBytes(_protocolName);
         Protocol storage entry = protocolsMap[key];
         require(_contains(entry), "protocolName (case insensitive) must be present in map");
         require(_isInRange(entry.index), "index must be in range");
@@ -46,7 +46,7 @@ contract ProtocolsRegistry is Ownable {
     }
 
     function getProtocolId(string memory _protocolName) public view returns (uint index) {
-        Protocol storage entry = protocolsMap[_protocolNameToIndex(_protocolName)];
+        Protocol storage entry = protocolsMap[protocolNameToBytes(_protocolName)];
         require(_contains(entry), "protocolName (case insensitive) must be present in map");
 
         return entry.index;
@@ -57,7 +57,7 @@ contract ProtocolsRegistry is Ownable {
     }
 
     function contains(string memory _protocolName) public view returns (bool) {
-        Protocol storage entry = protocolsMap[_protocolNameToIndex(_protocolName)];
+        Protocol storage entry = protocolsMap[protocolNameToBytes(_protocolName)];
         return _contains(entry);
     }
 
@@ -69,8 +69,13 @@ contract ProtocolsRegistry is Ownable {
         return (_index >= 0) && (_index < protocolsList.length);
     }
 
-    function _protocolNameToIndex(string memory _protocolName) private pure returns (bytes32) {
+    function protocolNameToBytes(string memory _protocolName) public pure returns (bytes32) {
         return keccak256(bytes(_toLowerCase(_protocolName)));
+    }
+
+    function bytesToProtocolName(bytes32 _protocolBytes) public view returns (string memory) {
+        Protocol storage entry = protocolsMap[_protocolBytes];
+        return entry.name;
     }
 
     function _toLowerCase(string memory str) private pure returns (string memory) {
