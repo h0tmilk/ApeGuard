@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>34/34</span>
+        <span class='fraction'>36/36</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">75% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>10/10</span>
+        <span class='fraction'>11/11</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>35/35</span>
+        <span class='fraction'>37/37</span>
       </div>
     </div>
   </div>
@@ -132,7 +132,12 @@
 87
 88
 89
-90</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+90
+91
+92
+93
+94
+95</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -148,13 +153,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16×</span>
-<span class="cline-any cline-yes">16×</span>
-<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15×</span>
-<span class="cline-any cline-yes">15×</span>
-<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">48×</span>
+<span class="cline-any cline-yes">48×</span>
+<span class="cline-any cline-yes">48×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -191,12 +196,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9×</span>
-<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">34×</span>
+<span class="cline-any cline-yes">34×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">38×</span>
+<span class="cline-any cline-yes">96×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -204,22 +209,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">38×</span>
+<span class="cline-any cline-yes">158×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">38×</span>
-<span class="cline-any cline-yes">38×</span>
-<span class="cline-any cline-yes">38×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">230×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">91×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">139×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">38×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">158×</span>
+<span class="cline-any cline-yes">158×</span>
+<span class="cline-any cline-yes">158×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">899×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">433×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">466×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">158×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.4;
@@ -237,7 +247,7 @@ contract ProtocolsRegistry is Ownable {
     bytes32[] public protocolsList;
 &nbsp;
     function add(string memory _protocolName) public onlyOwner {
-        bytes32 key = _protocolNameToIndex(_protocolName);
+        bytes32 key = protocolNameToBytes(_protocolName);
         Protocol storage entry = protocolsMap[key];
         require(!_contains(entry), "protocolName (case insensitive) already in map");
 &nbsp;
@@ -247,7 +257,7 @@ contract ProtocolsRegistry is Ownable {
     }
 &nbsp;
     function remove(string memory _protocolName) public onlyOwner {
-        bytes32 key = _protocolNameToIndex(_protocolName);
+        bytes32 key = protocolNameToBytes(_protocolName);
         Protocol storage entry = protocolsMap[key];
         require(_contains(entry), "protocolName (case insensitive) must be present in map");
         <span class="missing-if-branch" title="else path not taken" >E</span>require(_isInRange(entry.index), "index must be in range");
@@ -269,7 +279,7 @@ contract ProtocolsRegistry is Ownable {
     }
 &nbsp;
     function getProtocolId(string memory _protocolName) public view returns (uint index) {
-        Protocol storage entry = protocolsMap[_protocolNameToIndex(_protocolName)];
+        Protocol storage entry = protocolsMap[protocolNameToBytes(_protocolName)];
         <span class="missing-if-branch" title="else path not taken" >E</span>require(_contains(entry), "protocolName (case insensitive) must be present in map");
 &nbsp;
         return entry.index;
@@ -280,7 +290,7 @@ contract ProtocolsRegistry is Ownable {
     }
 &nbsp;
     function contains(string memory _protocolName) public view returns (bool) {
-        Protocol storage entry = protocolsMap[_protocolNameToIndex(_protocolName)];
+        Protocol storage entry = protocolsMap[protocolNameToBytes(_protocolName)];
         return _contains(entry);
     }
 &nbsp;
@@ -292,8 +302,13 @@ contract ProtocolsRegistry is Ownable {
         return (_index &gt;= 0) &amp;&amp; (_index &lt; protocolsList.length);
     }
 &nbsp;
-    function _protocolNameToIndex(string memory _protocolName) private pure returns (bytes32) {
+    function protocolNameToBytes(string memory _protocolName) public pure returns (bytes32) {
         return keccak256(bytes(_toLowerCase(_protocolName)));
+    }
+&nbsp;
+    function bytesToProtocolName(bytes32 _protocolBytes) public view returns (string memory) {
+        Protocol storage entry = protocolsMap[_protocolBytes];
+        return entry.name;
     }
 &nbsp;
     function _toLowerCase(string memory str) private pure returns (string memory) {
@@ -316,7 +331,7 @@ contract ProtocolsRegistry is Ownable {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun May 29 2022 02:17:41 GMT+0200 (heure d’été d’Europe centrale)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jun 02 2022 17:57:37 GMT+0200 (heure d’été d’Europe centrale)
 </div>
 </div>
 <script src="../prettify.js"></script>
