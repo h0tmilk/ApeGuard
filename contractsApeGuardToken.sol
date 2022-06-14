@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
-contract CertimioToken is ERC20, ERC20Permit, ERC20Votes {
-    constructor(uint256 initialSupply) ERC20("Certimio", "CER") ERC20Permit("CER") {
+contract ApeGuardToken is ERC20, ERC20Permit, ERC20Votes {
+    constructor(uint256 initialSupply) ERC20("ApeGuard", "APG") ERC20Permit("APG") {
         _mint(msg.sender, initialSupply);
     }
 
