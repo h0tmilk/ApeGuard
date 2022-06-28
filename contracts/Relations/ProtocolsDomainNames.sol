@@ -25,10 +25,10 @@ contract ProtocolsDomainNames is AllowedAddresses {
     public
     onlyAllowedSender()
     {
-        relationContract.unlinkAddress(_domainName, _protocolName);
+        relationContract.unlinkStrings(_domainName, _protocolName);
     }
 
-    function isLinked(string memory _domainName, string memory _protocolName)
+    function owns(string memory _protocolName, string memory _domainName)
     public
     view
     returns (bool)
@@ -60,7 +60,7 @@ contract ProtocolsDomainNames is AllowedAddresses {
         return relationContract.getStringR1LinkedStringsR2ByIndex(_protocolName, index);
     }
 
-    function getProtocolsCount(string memory _domainName)
+    function ownersCount(string memory _domainName)
     public
     view
     returns (uint)
@@ -68,7 +68,7 @@ contract ProtocolsDomainNames is AllowedAddresses {
         return relationContract.getStringR2LinkedStringsR1Count(_domainName);
     }
 
-    function getProtocolById(string memory _domainName, uint index)
+    function getOwnerProtocolByIndex(string memory _domainName, uint index)
     public
     view
     returns (string memory)

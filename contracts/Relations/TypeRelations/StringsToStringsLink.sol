@@ -26,16 +26,17 @@ contract StringsToStringsLink is AllowedAddresses {
         stringsRegistry1 = StringsRegistry(_stringsRegistry1Address);
         stringsRegistry2 = StringsRegistry(_stringsRegistry2Address);
 
-        stringsRegistry1.allowAddress(msg.sender);
-        stringsRegistry2.allowAddress(msg.sender);
+        stringsRegistry1.allowAddress(address(this));
+        stringsRegistry2.allowAddress(address(this));
     }
 
     function linkString(string memory _stringFromRegistry2, string memory _stringFromRegistry1) 
     public
     onlyAllowedSender()
     {
-        require(stringsRegistry2.contains(_stringFromRegistry1), "string not registered");
-        require(!isLinked(_stringFromRegistry2,_stringFromRegistry1), "address is already linked");
+        require(stringsRegistry1.contains(_stringFromRegistry1) && stringsRegistry2.contains(_stringFromRegistry2), 
+            "one or both strings are not registered");
+        require(!isLinked(_stringFromRegistry2,_stringFromRegistry1), "strings are is already linked");
 
         bytes32 stringIdFromR1 = stringsRegistry1.stringToBytes(_stringFromRegistry1);
         bytes32 stringIdFromR2 = stringsRegistry2.stringToBytes(_stringFromRegistry2);
@@ -52,23 +53,19 @@ contract StringsToStringsLink is AllowedAddresses {
         entry.stringR2ToStringR1Index = stringR2ToStringR1[stringIdFromR2].length - 1; // stringR2ToStringR1
 
         entryKeyIndexMap[stringIdFromR1][stringIdFromR2] = key; // entryKeyIndexMap
-
-        // add address address to registry if not present
-        if(!stringsRegistry2.contains(_stringFromRegistry2)) {
-            stringsRegistry2.add(_stringFromRegistry2);
-        }
     }
 
-    function unlinkAddress(string memory _stringFromRegistry2, string memory _stringFromRegistry1)
+    function unlinkStrings(string memory _stringFromRegistry2, string memory _stringFromRegistry1)
     public
     onlyAllowedSender()
     {
-        require(stringsRegistry2.contains(_stringFromRegistry1), "string not registered");
+        require(stringsRegistry1.contains(_stringFromRegistry1) && stringsRegistry2.contains(_stringFromRegistry2), 
+            "one or both strings are not registered");
         require(isLinked(_stringFromRegistry2,_stringFromRegistry1), "address is not linked");
 
         bytes32 stringIdFromR1 = stringsRegistry1.stringToBytes(_stringFromRegistry1);
         bytes32 stringIdFromR2 = stringsRegistry2.stringToBytes(_stringFromRegistry2);
-        bytes32 key = entryKeyIndexMap[stringIdFromR1][stringIdFromR2];
+        bytes32 key = keccak256(abi.encodePacked(stringIdFromR1, stringIdFromR2));
 
         StringsLinkEntry storage entry = entryMap[key]; // entryMap
 
@@ -95,11 +92,6 @@ contract StringsToStringsLink is AllowedAddresses {
 
         // delete from entryMap
         delete entryMap[key];
-
-        // delete address address to registry if no remaining linked string
-        if(getStringR1LinkedStringsR2Count(_stringFromRegistry2) == 0) {
-            stringsRegistry2.remove(_stringFromRegistry2);
-        }
     }
 
     function isLinked(string memory _stringFromRegistry2, string memory _stringFromRegistry1)
@@ -163,7 +155,7 @@ contract StringsToStringsLink is AllowedAddresses {
         require(_isLinked(key), "entry must be present in map");
 
         StringsLinkEntry storage entry = entryMap[key];
-        return stringsRegistry2.bytesToStringName(entry.stringIdFromR1);
+        return stringsRegistry1.bytesToStringName(entry.stringIdFromR1);
     }
 
     function _isLinked(bytes32 key)

@@ -36,6 +36,7 @@ contract AddressesToStringsLink is AllowedAddresses {
     onlyAllowedSender()
     {
         require(stringsRegistry.contains(_string), "string not registered");
+        require(addressesRegistry.contains(_address), "address not registered");
         require(!isLinked(_address,_string), "address is already linked");
 
         bytes32 stringId = stringsRegistry.stringToBytes(_string);
@@ -52,11 +53,6 @@ contract AddressesToStringsLink is AllowedAddresses {
         entry.stringToAddressIndex = stringToAddressListMap[stringId].length - 1; // stringToAddressListMap
 
         addressToStringMap[_address][stringId] = key; // addressToStringMap
-
-        // add address address to registry if not present
-        if(!addressesRegistry.contains(_address)) {
-            addressesRegistry.add(_address);
-        }
     }
 
     function unlinkAddress(address _address, string memory _string)
