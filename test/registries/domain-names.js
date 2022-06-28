@@ -47,14 +47,14 @@ describe("TrustedDomainRegistry contract", function () {
     it("Should allow only owner to add trustedDomain", async function() {
       await expect(
         this.trustedDomainsRegistry.connect(account1).add(trustedDomain1)
-      ).to.be.revertedWith("Ownable: caller is not the owner");
+      ).to.be.revertedWith("Caller is not allowed");
     });
 
     it("Should allow only owner to delete trustedDomain", async function() {
       await this.trustedDomainsRegistry.add(trustedDomain1);
       await expect(
         this.trustedDomainsRegistry.connect(account1).remove(trustedDomain1)
-      ).to.be.revertedWith("Ownable: caller is not the owner");
+      ).to.be.revertedWith("Caller is not allowed");
     });
   });
 });

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "../AccessControl/AllowedAddresses.sol";
 
-contract StringsRegistry is Ownable {
+contract StringsRegistry is AllowedAddresses {
 
     struct String {
         uint index;
@@ -15,11 +15,11 @@ contract StringsRegistry is Ownable {
 
     bool public uniqueString;
 
-    constructor(bool _uniqueString) {
+    constructor(bool _uniqueString) AllowedAddresses(){
         uniqueString = _uniqueString;
     }
 
-    function add(string memory _string) public virtual onlyOwner {
+    function add(string memory _string) public virtual onlyAllowedSender {
         bytes32 key = stringToBytes(_string);
         String storage entry = stringsMap[key];
         require(!(uniqueString && _contains(entry)), "string (case insensitive) already in map");
@@ -29,7 +29,7 @@ contract StringsRegistry is Ownable {
         entry.actualString = _string;
     }
 
-    function remove(string memory _string) public virtual onlyOwner {
+    function remove(string memory _string) public virtual onlyAllowedSender {
         bytes32 key = stringToBytes(_string);
         String storage entry = stringsMap[key];
         require(_contains(entry), "string (case insensitive) must be present in map");

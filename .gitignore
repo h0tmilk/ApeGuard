@@ -101,3 +101,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+.idea
+.mocharc.json
+.solcover.js
+.vscode
+artifacts
+cache
+scripts
+package-lock.json

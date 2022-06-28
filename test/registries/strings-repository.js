@@ -139,14 +139,14 @@ describe("StringsRegistry contract", function () {
     it("Should allow only owner to add string", async function() {
       await expect(
         this.stringsRegistry.connect(account1).add(string1)
-      ).to.be.revertedWith("Ownable: caller is not the owner");
+      ).to.be.revertedWith("Caller is not allowed");
     });
 
     it("Should allow only owner to delete string", async function() {
       await this.stringsRegistry.add(string1);
       await expect(
         this.stringsRegistry.connect(account1).remove(string1)
-      ).to.be.revertedWith("Ownable: caller is not the owner");
+      ).to.be.revertedWith("Caller is not allowed");
     });
   });
 });

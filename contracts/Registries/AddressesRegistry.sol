@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "../AccessControl/AllowedAddresses.sol";
 
-contract AddressesRegistry is Ownable {
+contract AddressesRegistry is AllowedAddresses {
 
     struct Address {
         uint index;
@@ -13,7 +13,9 @@ contract AddressesRegistry is Ownable {
     mapping(address => Address) public addressesMap; // address => index in the list
     address[] public addressesList;
 
-    function add(address _address) public virtual onlyOwner {
+    constructor() AllowedAddresses() {}
+
+    function add(address _address) public virtual onlyAllowedSender {
         Address storage entry = addressesMap[_address];
         require(!_contains(entry), "address already in map");
 
@@ -22,7 +24,7 @@ contract AddressesRegistry is Ownable {
         entry.exists = true;
     }
 
-    function remove(address _address) public virtual onlyOwner {
+    function remove(address _address) public virtual onlyAllowedSender {
         Address storage entry = addressesMap[_address];
         require(_contains(entry), "address must be present in map");
         require(_isInRange(entry.index), "index must be in range");

@@ -113,14 +113,14 @@ describe("AddressesRegistry contract", function () {
     it("Should allow only owner to add address", async function() {
       await expect(
         this.addressesRegistry.connect(address1).add(address1.address)
-      ).to.be.revertedWith("Ownable: caller is not the owner");
+      ).to.be.revertedWith("Caller is not allowed");
     });
 
     it("Should allow only owner to delete address", async function() {
       await this.addressesRegistry.add(address1.address);
       await expect(
         this.addressesRegistry.connect(address1).remove(address1.address)
-      ).to.be.revertedWith("Ownable: caller is not the owner");
+      ).to.be.revertedWith("Caller is not allowed");
     });
   });
 });

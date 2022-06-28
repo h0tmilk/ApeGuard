@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.4;
 
-import "../Registries/AddressesRegistry.sol";
-import "../Registries/StringsRegistry.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "../../Registries/AddressesRegistry.sol";
+import "../../Registries/StringsRegistry.sol";
+import "../../AccessControl/AllowedAddresses.sol";
 
-contract AddressesToStringsLink is Ownable {
+contract AddressesToStringsLink is AllowedAddresses {
     struct StringAddressEntry{
-        address addressAddress;
+        address linkedAddress;
         bytes32 stringId;
         uint entryKeyIndex;
         uint addressToStringIndex;
@@ -20,52 +20,55 @@ contract AddressesToStringsLink is Ownable {
     mapping(address => bytes32[]) public addressToStringListMap; // Address => key list of entryMap
     mapping(bytes32 => bytes32[]) public stringToAddressListMap; // String => key list of entryMap
 
-    AddressesRegistry addressesRegistry;
-    StringsRegistry stringsRegistry;
+    AddressesRegistry public addressesRegistry;
+    StringsRegistry public stringsRegistry;
 
-    constructor(address _addressesRegistryAddress, address _stringsRegistryAddress) {
+    constructor(address _addressesRegistryAddress, address _stringsRegistryAddress) AllowedAddresses() {
         addressesRegistry = AddressesRegistry(_addressesRegistryAddress);
         stringsRegistry = StringsRegistry(_stringsRegistryAddress);
+
+        addressesRegistry.allowAddress(address(this));
+        stringsRegistry.allowAddress(address(this));
     }
 
-    function linkAddress(address _addressAddress, string memory _stringName) 
+    function linkAddress(address _address, string memory _string) 
     public
-    onlyOwner()
+    onlyAllowedSender()
     {
-        require(stringsRegistry.contains(_stringName), "string not registered");
-        require(!isLinked(_addressAddress,_stringName), "address is already linked");
+        require(stringsRegistry.contains(_string), "string not registered");
+        require(!isLinked(_address,_string), "address is already linked");
 
-        bytes32 stringId = stringsRegistry.stringToBytes(_stringName);
-        bytes32 key = keccak256(abi.encodePacked(_addressAddress, stringId));
+        bytes32 stringId = stringsRegistry.stringToBytes(_string);
+        bytes32 key = keccak256(abi.encodePacked(_address, stringId));
 
         StringAddressEntry storage entry = entryMap[key]; // entryMap
-        entry.addressAddress = _addressAddress;
+        entry.linkedAddress = _address;
         entry.stringId = stringId;
         entryKeyList.push(key);
         entry.entryKeyIndex = entryKeyList.length - 1; // entryKeyList
-        addressToStringListMap[_addressAddress].push(key);
-        entry.addressToStringIndex = addressToStringListMap[_addressAddress].length - 1; // addressToStringListMap
+        addressToStringListMap[_address].push(key);
+        entry.addressToStringIndex = addressToStringListMap[_address].length - 1; // addressToStringListMap
         stringToAddressListMap[stringId].push(key);
         entry.stringToAddressIndex = stringToAddressListMap[stringId].length - 1; // stringToAddressListMap
 
-        addressToStringMap[_addressAddress][stringId] = key; // addressToStringMap
+        addressToStringMap[_address][stringId] = key; // addressToStringMap
 
         // add address address to registry if not present
-        if(!addressesRegistry.contains(_addressAddress)) {
-            addressesRegistry.add(_addressAddress);
+        if(!addressesRegistry.contains(_address)) {
+            addressesRegistry.add(_address);
         }
     }
 
-    function unlinkAddress(address _addressAddress, string memory _stringName)
+    function unlinkAddress(address _address, string memory _string)
     public
-    onlyOwner()
+    onlyAllowedSender()
     {
-        require(stringsRegistry.contains(_stringName), "string not registered");
-        require(isLinked(_addressAddress,_stringName), "address is not linked");
+        require(stringsRegistry.contains(_string), "string not registered");
+        require(isLinked(_address,_string), "address is not linked");
 
 
-        bytes32 stringId = stringsRegistry.stringToBytes(_stringName);
-        bytes32 key = addressToStringMap[_addressAddress][stringId];
+        bytes32 stringId = stringsRegistry.stringToBytes(_string);
+        bytes32 key = addressToStringMap[_address][stringId];
 
         StringAddressEntry storage entry = entryMap[key]; // entryMap
 
@@ -76,10 +79,10 @@ contract AddressesToStringsLink is Ownable {
         entryKeyList.pop();
 
         // addressToStringListMap
-        lastKeyOfList = addressToStringListMap[_addressAddress][addressToStringListMap[_addressAddress].length - 1];
+        lastKeyOfList = addressToStringListMap[_address][addressToStringListMap[_address].length - 1];
         entryMap[lastKeyOfList].addressToStringIndex = entry.addressToStringIndex;
-        addressToStringListMap[_addressAddress][entry.addressToStringIndex] = lastKeyOfList;
-        addressToStringListMap[_addressAddress].pop();
+        addressToStringListMap[_address][entry.addressToStringIndex] = lastKeyOfList;
+        addressToStringListMap[_address].pop();
 
         // stringToAddressListMap
         lastKeyOfList = stringToAddressListMap[stringId][stringToAddressListMap[stringId].length - 1];
@@ -88,24 +91,24 @@ contract AddressesToStringsLink is Ownable {
         stringToAddressListMap[stringId].pop();
 
         // delete from addressToStringMap
-        delete addressToStringMap[_addressAddress][stringId];
+        delete addressToStringMap[_address][stringId];
 
         // delete from entryMap
         delete entryMap[key];
 
         // delete address address to registry if no remaining linked string
-        if(getLinkedStringsCount(_addressAddress) == 0) {
-            addressesRegistry.remove(_addressAddress);
+        if(getLinkedStringsCount(_address) == 0) {
+            addressesRegistry.remove(_address);
         }
     }
 
-    function isLinked(address _addressAddress, string memory _stringId)
+    function isLinked(address _address, string memory _string)
     public
     view
     returns (bool)
     {
-        bytes32 stringId = stringsRegistry.stringToBytes(_stringId);
-        return _isLinked(addressToStringMap[_addressAddress][stringId]);
+        bytes32 stringId = stringsRegistry.stringToBytes(_string);
+        return _isLinked(addressToStringMap[_address][stringId]);
     }
 
     function getLinksTotalCount()
@@ -116,46 +119,57 @@ contract AddressesToStringsLink is Ownable {
         return entryKeyList.length;
     }
 
-    function getLinkedStringsCount(address _addressAddress)
+    function getLinkedStringsCount(address _address)
     public
     view
     returns (uint)
     {
-        return addressToStringListMap[_addressAddress].length;
+        return addressToStringListMap[_address].length;
     }
 
-    function getLinkedStringById(address _addressAddress, uint index)
+    function getLinkedStringById(address _address, uint index)
     public
     view
     returns (string memory)
     {
-        bytes32 key = addressToStringListMap[_addressAddress][index];
+        require(index >= 0 && index < getLinkedStringsCount(_address), "index out of bounds");
+        bytes32 key = addressToStringListMap[_address][index];
         require(_isLinked(key), "entry must be present in map");
 
         StringAddressEntry storage entry = entryMap[key];
         return stringsRegistry.bytesToStringName(entry.stringId);
     }
 
-    function getLinkedAddressesCount(string memory _stringId)
+    function getLinkedAddressesCount(string memory _string)
     public
     view
     returns (uint)
     {
-        bytes32 stringId = stringsRegistry.stringToBytes(_stringId);
+        bytes32 stringId = stringsRegistry.stringToBytes(_string);
         return stringToAddressListMap[stringId].length;
     }
 
-    function getLinkedAddressById(string memory _stringId, uint index)
+    function getLinkedAddressById(string memory _string, uint index)
     public
     view
     returns (address)
     {
-        bytes32 stringId = stringsRegistry.stringToBytes(_stringId);
+        bytes32 stringId = stringsRegistry.stringToBytes(_string);
+        require(index >= 0 && index < _getLinkedAddressesCount(stringId), "index out of bounds");
+
         bytes32 key = stringToAddressListMap[stringId][index];
         require(_isLinked(key), "entry must be present in map");
 
         StringAddressEntry storage entry = entryMap[key];
-        return entry.addressAddress;
+        return entry.linkedAddress;
+    }
+
+    function _getLinkedAddressesCount(bytes32 _stringId)
+    private
+    view
+    returns (uint)
+    {
+         return stringToAddressListMap[_stringId].length;
     }
 
     function _isLinked(bytes32 key)

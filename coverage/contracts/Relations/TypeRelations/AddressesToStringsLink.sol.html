@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts/Relations/TypeRelations/AddressesToStringsLink.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">contracts/Relations/TypeRelations/</a> AddressesToStringsLink.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">98.28% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>57/58</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">65% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>13/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>11/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">98.33% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>59/60</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.4;
+&nbsp;
+import "../../Registries/AddressesRegistry.sol";
+import "../../Registries/StringsRegistry.sol";
+import "../../AccessControl/AllowedAddresses.sol";
+&nbsp;
+contract AddressesToStringsLink is AllowedAddresses {
+    struct StringAddressEntry{
+        address linkedAddress;
+        bytes32 stringId;
+        uint entryKeyIndex;
+        uint addressToStringIndex;
+        uint stringToAddressIndex;
+    }
+    mapping(bytes32 =&gt; StringAddressEntry) public entryMap;
+    mapping(address =&gt; mapping(bytes32 =&gt; bytes32)) public addressToStringMap; // Address + String =&gt; key of entryMap
+&nbsp;
+    bytes32[] public entryKeyList; // key list of entryMap
+    mapping(address =&gt; bytes32[]) public addressToStringListMap; // Address =&gt; key list of entryMap
+    mapping(bytes32 =&gt; bytes32[]) public stringToAddressListMap; // String =&gt; key list of entryMap
+&nbsp;
+    AddressesRegistry public addressesRegistry;
+    StringsRegistry public stringsRegistry;
+&nbsp;
+    constructor(address _addressesRegistryAddress, address _stringsRegistryAddress) AllowedAddresses() {
+        addressesRegistry = AddressesRegistry(_addressesRegistryAddress);
+        stringsRegistry = StringsRegistry(_stringsRegistryAddress);
+&nbsp;
+        addressesRegistry.allowAddress(address(this));
+        stringsRegistry.allowAddress(address(this));
+    }
+&nbsp;
+    function linkAddress(address _address, string memory _string) 
+    public
+    onlyAllowedSender()
+    {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(stringsRegistry.contains(_string), "string not registered");
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(!isLinked(_address,_string), "address is already linked");
+&nbsp;
+        bytes32 stringId = stringsRegistry.stringToBytes(_string);
+        bytes32 key = keccak256(abi.encodePacked(_address, stringId));
+&nbsp;
+        StringAddressEntry storage entry = entryMap[key]; // entryMap
+        entry.linkedAddress = _address;
+        entry.stringId = stringId;
+        entryKeyList.push(key);
+        entry.entryKeyIndex = entryKeyList.length - 1; // entryKeyList
+        addressToStringListMap[_address].push(key);
+        entry.addressToStringIndex = addressToStringListMap[_address].length - 1; // addressToStringListMap
+        stringToAddressListMap[stringId].push(key);
+        entry.stringToAddressIndex = stringToAddressListMap[stringId].length - 1; // stringToAddressListMap
+&nbsp;
+        addressToStringMap[_address][stringId] = key; // addressToStringMap
+&nbsp;
+        // add address address to registry if not present
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(!addressesRegistry.contains(_address)) {
+<span class="cstat-no" title="statement not covered" >            addressesRegistry.add(_address)</span>;
+        }
+    }
+&nbsp;
+    function unlinkAddress(address _address, string memory _string)
+    public
+    onlyAllowedSender()
+    {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(stringsRegistry.contains(_string), "string not registered");
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(isLinked(_address,_string), "address is not linked");
+&nbsp;
+&nbsp;
+        bytes32 stringId = stringsRegistry.stringToBytes(_string);
+        bytes32 key = addressToStringMap[_address][stringId];
+&nbsp;
+        StringAddressEntry storage entry = entryMap[key]; // entryMap
+&nbsp;
+        // entryKeyList
+        bytes32 lastKeyOfList = entryKeyList[entryKeyList.length - 1];
+        entryMap[lastKeyOfList].entryKeyIndex = entry.entryKeyIndex;
+        entryKeyList[entry.entryKeyIndex] = lastKeyOfList;
+        entryKeyList.pop();
+&nbsp;
+        // addressToStringListMap
+        lastKeyOfList = addressToStringListMap[_address][addressToStringListMap[_address].length - 1];
+        entryMap[lastKeyOfList].addressToStringIndex = entry.addressToStringIndex;
+        addressToStringListMap[_address][entry.addressToStringIndex] = lastKeyOfList;
+        addressToStringListMap[_address].pop();
+&nbsp;
+        // stringToAddressListMap
+        lastKeyOfList = stringToAddressListMap[stringId][stringToAddressListMap[stringId].length - 1];
+        entryMap[lastKeyOfList].stringToAddressIndex = entry.stringToAddressIndex;
+        stringToAddressListMap[stringId][entry.stringToAddressIndex] = lastKeyOfList;
+        stringToAddressListMap[stringId].pop();
+&nbsp;
+        // delete from addressToStringMap
+        delete addressToStringMap[_address][stringId];
+&nbsp;
+        // delete from entryMap
+        delete entryMap[key];
+&nbsp;
+        // delete address address to registry if no remaining linked string
+        if(getLinkedStringsCount(_address) == 0) {
+            addressesRegistry.remove(_address);
+        }
+    }
+&nbsp;
+    function isLinked(address _address, string memory _string)
+    public
+    view
+    returns (bool)
+    {
+        bytes32 stringId = stringsRegistry.stringToBytes(_string);
+        return _isLinked(addressToStringMap[_address][stringId]);
+    }
+&nbsp;
+    function getLinksTotalCount()
+    public
+    view
+    returns (uint)
+    {
+        return entryKeyList.length;
+    }
+&nbsp;
+    function getLinkedStringsCount(address _address)
+    public
+    view
+    returns (uint)
+    {
+        return addressToStringListMap[_address].length;
+    }
+&nbsp;
+    function getLinkedStringById(address _address, uint index)
+    public
+    view
+    returns (string memory)
+    {
+        require(index &gt;= 0 &amp;&amp; index &lt; getLinkedStringsCount(_address), "index out of bounds");
+        bytes32 key = addressToStringListMap[_address][index];
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(_isLinked(key), "entry must be present in map");
+&nbsp;
+        StringAddressEntry storage entry = entryMap[key];
+        return stringsRegistry.bytesToStringName(entry.stringId);
+    }
+&nbsp;
+    function getLinkedAddressesCount(string memory _string)
+    public
+    view
+    returns (uint)
+    {
+        bytes32 stringId = stringsRegistry.stringToBytes(_string);
+        return stringToAddressListMap[stringId].length;
+    }
+&nbsp;
+    function getLinkedAddressById(string memory _string, uint index)
+    public
+    view
+    returns (address)
+    {
+        bytes32 stringId = stringsRegistry.stringToBytes(_string);
+        require(index &gt;= 0 &amp;&amp; index &lt; _getLinkedAddressesCount(stringId), "index out of bounds");
+&nbsp;
+        bytes32 key = stringToAddressListMap[stringId][index];
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(_isLinked(key), "entry must be present in map");
+&nbsp;
+        StringAddressEntry storage entry = entryMap[key];
+        return entry.linkedAddress;
+    }
+&nbsp;
+    function _getLinkedAddressesCount(bytes32 _stringId)
+    private
+    view
+    returns (uint)
+    {
+         return stringToAddressListMap[_stringId].length;
+    }
+&nbsp;
+    function _isLinked(bytes32 key)
+    private
+    pure
+    returns (bool)
+    {
+        return key != 0;
+    }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 28 2022 18:22:12 GMT+0200 (heure d’été d’Europe centrale)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
