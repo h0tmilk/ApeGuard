@@ -22,12 +22,9 @@ contract StringsToStringsLink is AllowedAddresses {
     StringsRegistry public stringsRegistry1;
     StringsRegistry public stringsRegistry2;
 
-    constructor(address _stringsRegistry1Address, address _stringsRegistry2Address) AllowedAddresses(){
-        stringsRegistry1 = StringsRegistry(_stringsRegistry1Address);
-        stringsRegistry2 = StringsRegistry(_stringsRegistry2Address);
-
-        stringsRegistry1.allowAddress(address(this));
-        stringsRegistry2.allowAddress(address(this));
+    constructor(StringsRegistry _stringsRegistry1Address, StringsRegistry _stringsRegistry2Address) AllowedAddresses(){
+        stringsRegistry1 = _stringsRegistry1Address;
+        stringsRegistry2 = _stringsRegistry2Address;
     }
 
     function linkString(string memory _stringFromRegistry2, string memory _stringFromRegistry1) 

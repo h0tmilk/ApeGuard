@@ -23,12 +23,9 @@ contract AddressesToStringsLink is AllowedAddresses {
     AddressesRegistry public addressesRegistry;
     StringsRegistry public stringsRegistry;
 
-    constructor(address _addressesRegistryAddress, address _stringsRegistryAddress) AllowedAddresses() {
-        addressesRegistry = AddressesRegistry(_addressesRegistryAddress);
-        stringsRegistry = StringsRegistry(_stringsRegistryAddress);
-
-        addressesRegistry.allowAddress(address(this));
-        stringsRegistry.allowAddress(address(this));
+    constructor(AddressesRegistry _addressesRegistryAddress, StringsRegistry _stringsRegistryAddress) AllowedAddresses() {
+        addressesRegistry = _addressesRegistryAddress;
+        stringsRegistry = _stringsRegistryAddress;
     }
 
     function linkAddress(address _address, string memory _string) 

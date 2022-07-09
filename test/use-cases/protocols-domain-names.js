@@ -39,6 +39,8 @@ describe("Protocol domain names", function () {
 
     this.protocolDomainNames = await this.ProtocolDomainNames.deploy(this.protocolsRegistry.address, this.domainNamesRegistry.address);
     await this.protocolDomainNames.deployed();
+
+    
   });
 
   describe("Expected use-cases", function () {

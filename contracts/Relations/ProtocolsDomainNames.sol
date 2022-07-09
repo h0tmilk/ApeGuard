@@ -10,7 +10,7 @@ contract ProtocolsDomainNames is AllowedAddresses {
     
     StringsToStringsLink public relationContract;
 
-    constructor(address _protocolsRegistry, address _domainNameRegistry) AllowedAddresses() {
+    constructor(StringsRegistry _protocolsRegistry, DomainNamesRegistry _domainNameRegistry) AllowedAddresses() {        
         relationContract = new StringsToStringsLink(_protocolsRegistry, _domainNameRegistry);
     }
 

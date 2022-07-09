@@ -33,6 +33,12 @@ describe("Protocol addresses", function () {
 
     this.protocolAddresses = await this.ProtocolAddresses.deploy(this.addressesRegistry.address, this.protocolsRegistry.address);
     await this.protocolAddresses.deployed();
+
+    // Allow relationContract to manage addressesRegistry and protocolsRegistry
+    await this.addressesRegistry.allowAddress(this.protocolAddresses.relationContract());
+    await this.protocolsRegistry.allowAddress(this.protocolAddresses.relationContract());
+    await this.addressesRegistry.disallowAddress(owner.address);
+    await this.protocolsRegistry.disallowAddress(owner.address);
   });
 
   describe("Expected use-cases", function () {
