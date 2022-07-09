@@ -12,4 +12,5 @@ Next steps :
 - Implement tokenomics
 
 Tokenomics (in very simple schema, may change as I'm not a pro in tokenomics) :
+
 ![](./documentation/ApeGuard-Tokenomics.jpg)
